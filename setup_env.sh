@@ -7,9 +7,9 @@ WORK_DIR=$PWD
 # Prerequsite: conda, python 3.8 or above; cmake; LLVM-13
 
 # Step 0: Create conda environment & install related packages
-#conda create -n ipex python=3.8 -y
-#conda activate ipex
-#conda install pytorch==1.13.0 torchvision==0.14.0 -c pytorch
+conda create -n ipex python=3.8 -y
+conda activate ipex
+conda install pytorch==1.13.0 torchvision==0.14.0 -c pytorch
 
 # Step 1: Build IPEX
 git clone --branch release/1.13 https://github.com/intel/intel-extension-for-pytorch
