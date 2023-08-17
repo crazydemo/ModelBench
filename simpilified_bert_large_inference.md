@@ -8,76 +8,58 @@ This document has instructions for running BERT Large SQuAD1.1 inference using
 Intel-optimized PyTorch.
 
 ## Bare Metal
-### General setup
-
-```
-  pip install scikit-learn
-  pip install onnx
-  pip install lark-parser hypothesis
-  pip install tensorboardX
-  conda install numpy ninja pyyaml mkl mkl-include setuptools cffi typing_extensions future six requests dataclasses psutil
-  conda install -c conda-forge jemalloc
-
-  # install torch-ccl
-  git clone https://github.com/intel/torch-ccl.git &&cd torch-ccl
-  git checkout ccl_torch1.13
-  git submodule sync 
-  git submodule update --init --recursive
-  python setup.py install 
-```
-
 ### Prepare model
 ```
-  cd <clone of the model zoo>/quickstart/language_modeling/pytorch/bert_large/inference/cpu
-  git clone https://github.com/huggingface/transformers.git
-  cd transformers
-  git checkout v4.18.0
-  git apply ../enable_ipex_for_squad.diff
-  pip install -e ./
-  cd ../
+cd <clone of the model zoo>/quickstart/language_modeling/pytorch/bert_large/inference/cpu
+git clone https://github.com/huggingface/transformers.git
+cd transformers
+git checkout v4.18.0
+git apply ../enable_ipex_for_squad.diff
+pip install -e ./
+cd ../
 
 ```
 ### Model Specific Setup
 * Install dependency
 ```
-  conda install intel-openmp
+conda install intel-openmp
 ```
 
 * Download dataset
 
-  Please following this [link](https://github.com/huggingface/transformers/tree/v3.0.2/examples/question-answering) to get dev-v1.1.json
+Please following this [link](https://github.com/huggingface/transformers/tree/v3.0.2/examples/question-answering) to get dev-v1.1.json
 
 * Download fine-tuned model
 ```
-  mkdir bert_squad_model
-  wget https://s3.amazonaws.com/models.huggingface.co/bert/bert-large-uncased-whole-word-masking-finetuned-squad-config.json -O bert_squad_model/config.json
-  wget https://cdn.huggingface.co/bert-large-uncased-whole-word-masking-finetuned-squad-pytorch_model.bin  -O bert_squad_model/pytorch_model.bin
-  wget https://s3.amazonaws.com/models.huggingface.co/bert/bert-large-uncased-whole-word-masking-finetuned-squad-vocab.txt -O bert_squad_model/vocab.txt
+mkdir bert_squad_model
+wget https://s3.amazonaws.com/models.huggingface.co/bert/bert-large-uncased-whole-word-masking-finetuned-squad-config.json -O bert_squad_model/config.json
+wget https://cdn.huggingface.co/bert-large-uncased-whole-word-masking-finetuned-squad-pytorch_model.bin  -O bert_squad_model/pytorch_model.bin
+wget https://s3.amazonaws.com/models.huggingface.co/bert/bert-large-uncased-whole-word-masking-finetuned-squad-vocab.txt -O bert_squad_model/vocab.txt
 ```
 
 * Set ENV to use AMX if you are using SPR
 ```
-  export DNNL_MAX_CPU_ISA=AVX512_CORE_AMX
+export DNNL_MAX_CPU_ISA=AVX512_CORE_AMX
 ```
 
 * Set ENV for model and dataset path, and optionally run with no network support
 ```
-  export FINETUNED_MODEL=#path/bert_squad_model
-  export EVAL_DATA_FILE=#/path/dev-v1.1.json
+export FINETUNED_MODEL=#path/bert_squad_model
+export EVAL_DATA_FILE=#/path/dev-v1.1.json
   
-  ### correct EVAL_DATA_FILE
-  change EVAL_DATA_FILE=${VAL_DATA_FILE}
+### correct EVAL_DATA_FILE
+change EVAL_DATA_FILE=${VAL_DATA_FILE}
   
-  ### [optional] Pure offline mode to benchmark:
-  change --tokenizer_name to #path/bert_squad_model in scripts before running
-  e.g. --tokenizer_name ${FINETUNED_MODEL} in run_multi_instance_throughput.sh
+### [optional] Pure offline mode to benchmark:
+change --tokenizer_name to #path/bert_squad_model in scripts before running
+e.g. --tokenizer_name ${FINETUNED_MODEL} in run_multi_instance_throughput.sh
   
 ```
 
 * [optional] Do calibration to get quantization config if you want do calibration by yourself.
 ```
-  export INT8_CONFIG=#/path/configure.json
-  run_calibration.sh
+export INT8_CONFIG=#/path/configure.json
+run_calibration.sh
 ```
 
 ## Quick Start Scripts
