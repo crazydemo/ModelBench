@@ -27,7 +27,7 @@ export DNNL_GRAPH_BUILD_COMPILER_BACKEND=1
 python setup.py install
 
 # Step 2: Pull model zoo
-#cd ..
+cd ..
 git clone --branch pytorch-r1.13-models https://github.com/IntelAI/models.git
 
 # Step 3: General setup
