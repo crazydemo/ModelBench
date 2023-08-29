@@ -1,6 +1,9 @@
 # ModelBench
 Instructions on benching AI model with anonymous compiler
 
+## Docker
+[Docker](https://drive.google.com/drive/folders/1sLo7OFIqAmQb-zYzTo-rf-fKAFU3ajpG?usp=sharing)
+
 ## Setup ENV
 use following cmd to install ipex and intel ai model zoo.
 ```
