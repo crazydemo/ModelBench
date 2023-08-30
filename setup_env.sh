@@ -7,8 +7,8 @@ WORK_DIR=$PWD
 # Prerequsite: conda, python 3.8 or above; cmake; LLVM-13
 
 # Step 0: Create conda environment & install related packages
-conda create -n ipex_dlrm python=3.8 -y
-conda activate ipex_dlrm
+conda create -n ipex python=3.8 -y
+conda activate ipex
 conda install pytorch==1.13.0 torchvision==0.14.0 -c pytorch
 
 # Step 1: Build IPEX
