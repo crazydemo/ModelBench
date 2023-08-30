@@ -43,4 +43,5 @@ git clone https://github.com/intel/torch-ccl.git &&cd torch-ccl
 git checkout ccl_torch1.13
 git submodule sync 
 git submodule update --init --recursive
-python setup.py install 
+python setup.py install
+cd ..
