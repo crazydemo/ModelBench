@@ -19,18 +19,13 @@ Intel-optimized PyTorch for bare metal.
 
 * Set Jemalloc Preload for better performance
   ```bash
-  export LD_PRELOAD="<path to the jemalloc directory>/lib/libjemalloc.so":$LD_PRELOAD
+  export LD_PRELOAD="/miniconda/envs/ipex/lib/libjemalloc.so":$LD_PRELOAD
   export MALLOC_CONF="oversize_threshold:1,background_thread:true,metadata_thp:auto,dirty_decay_ms:9000000000,muzzy_decay_ms:9000000000"
   ```
 
 * Set IOMP preload for better performance
   ```bash
-  export LD_PRELOAD=<path to the intel-openmp directory>/lib/libiomp5.so:$LD_PRELOAD
-  ```
-
-* Set ENV to use AMX if you are using SPR
-  ```bash
-  export DNNL_MAX_CPU_ISA=AVX512_CORE_AMX
+  export LD_PRELOAD=/miniconda/envs/ipex/lib/libiomp5.so:$LD_PRELOAD
   ```
 
 ## Datasets

@@ -37,6 +37,7 @@ pip install lark-parser hypothesis
 pip install tensorboardX
 conda install numpy ninja pyyaml mkl mkl-include setuptools cffi typing_extensions future six requests dataclasses psutil
 conda install -c conda-forge jemalloc
+conda install intel-openmp
 
 # install torch-ccl
 git clone https://github.com/intel/torch-ccl.git &&cd torch-ccl
@@ -45,3 +46,5 @@ git submodule sync
 git submodule update --init --recursive
 python setup.py install
 cd ..
+
+export LD_PRELOAD=${LD_PRELOAD}:/usr/lib/x86_64-linux-gnu/libstdc++.so.6
