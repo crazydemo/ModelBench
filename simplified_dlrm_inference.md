@@ -11,22 +11,15 @@ Intel-optimized PyTorch for bare metal.
 
 ### Model Specific Setup
 
-* Install dependencies
-  ```bash
-  cd <clone of the model zoo>/quickstart/recommendation/pytorch/dlrm
-  pip install -r requirements.txt
-  ```
+Make sure you have set up the general dependecies via `source setup_env.sh`
+You should now at:
+1. conda env: ipex
+2. locate at /home/ModelBench
 
-* Set Jemalloc Preload for better performance
-  ```bash
-  export LD_PRELOAD="/miniconda/envs/ipex/lib/libjemalloc.so":$LD_PRELOAD
-  export MALLOC_CONF="oversize_threshold:1,background_thread:true,metadata_thp:auto,dirty_decay_ms:9000000000,muzzy_decay_ms:9000000000"
-  ```
-
-* Set IOMP preload for better performance
-  ```bash
-  export LD_PRELOAD=/miniconda/envs/ipex/lib/libiomp5.so:$LD_PRELOAD
-  ```
+Then you can run
+```
+source setup_bert_env.sh
+```
 
 ## Datasets
 
@@ -52,47 +45,18 @@ scripts will automatically use the preprocessed data.
 
 ## Quick Start Scripts
 
+```bash
+
+# Env vars
+export PRECISION=<specify the precision to run>
+export DATASET_DIR=<path to the dataset>
+export OUTPUT_DIR=<directory where log files will be written>
+```
+
 | Script name | Description |
 |-------------|-------------|
 | `inference_performance.sh` | Run inference to verify performance for the specified precision (fp32, bf32, bf16, or int8). |
 | `accuracy.sh` | Measures the inference accuracy for the specified precision (fp32, bf32, bf16, or int8). |
-
-## Run the model
-
-Download the DLRM PyTorch weights (`tb00_40M.pt`, 90GB) from the
-[MLPerf repo](https://github.com/mlcommons/inference/tree/master/recommendation/dlrm/pytorch#more-information-about-the-model-weights)
-and set the `WEIGHT_PATH` to point to the weights file.
-```
-export WEIGHT_PATH=<path to the tb00_40M.pt file>
-```
-
-Follow the instructions above to setup your bare metal environment, do the
-model-specific setup and download and prepropcess the datsaet. Once all the
-setup is done, the Model Zoo can be used to run a [quickstart script](#quick-start-scripts).
-Ensure that you have enviornment variables set to point to the dataset directory,
-precision, weights file, and an output directory.
-
-```bash
-# Clone the model zoo repo and set the MODEL_DIR
-git clone https://github.com/IntelAI/models.git
-cd models
-export MODEL_DIR=$(pwd)
-
-# Env vars
-export PRECISION=<specify the precision to run>
-export WEIGHT_PATH=<path to the tb00_40M.pt file> # only needed for testing accuracy
-export DATASET_DIR=<path to the dataset>
-export OUTPUT_DIR=<directory where log files will be written>
-
-# Run a quickstart script (for example, bare metal performance)
-cd ${MODEL_DIR}/quickstart/recommendation/pytorch/dlrm/inference/cpu
-bash inference_performance.sh
-```
-Note: modify the below two argsto switch to throughput mode (32 cores per instance).
-```
-# OMP_NUM_THREADS=1 => OMP_NUM_THREADS=32
-# -share-weight-instance=$Cores => -share-weight-instance=0
-```
 
 ## More Details
 Please refer to [link](https://github.com/IntelAI/models/blob/pytorch-r1.13-models/quickstart/recommendation/pytorch/dlrm/inference/cpu/README.md).
