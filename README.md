@@ -1,5 +1,6 @@
 # ModelBench
 Instructions on benching AI model with anonymous compiler
+[![DOI](https://zenodo.org/badge/679274457.svg)](https://zenodo.org/badge/latestdoi/679274457)
 
 ## Docker
 [Docker](https://drive.google.com/drive/folders/1sLo7OFIqAmQb-zYzTo-rf-fKAFU3ajpG?usp=sharing)
