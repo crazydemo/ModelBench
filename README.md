@@ -9,6 +9,12 @@ use following cmd to install ipex and intel ai model zoo.
 ```
 source setup_env.sh
 ```
+
+## Bench Bert Large
+Please refer to [Simplified Bert Large Inference](https://github.com/crazydemo/ModelBench/blob/main/simpilified_bert_large_inference.md). The detailed guidance is in [Detailed Bert Large Inference](https://github.com/IntelAI/models/blob/pytorch-r1.13-models/quickstart/language_modeling/pytorch/bert_large/inference/cpu/README.md)
+
+## Bench DLRM
+Please refer to [Simplified DLRM Inference](https://github.com/crazydemo/ModelBench/blob/main/simplified_dlrm_inference.md). The detailed guidance is in [Detailed DLRM Inference](https://github.com/IntelAI/models/blob/pytorch-r1.13-models/quickstart/recommendation/pytorch/dlrm/inference/cpu/README.md)
 ## Manual Config
 By default, only int8 mode of IPEX will run into oneDNN Graph. If you want to benchmark the performance under fp32 mode with oneDNN Graph and Anonymous Compiler, you need to manually do some modification on IPEX and Model Zoo source code.
 For IPEX, `navigate to [IPEX_ROOT]/csrc/cpu/jit/codegen/onednn/interface.cpp and change the value of llga_fp32_bf16_enabled from false to true`:
