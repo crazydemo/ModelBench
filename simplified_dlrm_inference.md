@@ -9,18 +9,6 @@ Intel-optimized PyTorch for bare metal.
 
 ## Bare Metal
 
-### Model Specific Setup
-
-Make sure you have set up the general dependecies via `source setup_env.sh`
-You should now at:
-1. conda env: ipex
-2. locate at /home/ModelBench
-
-Then you can run
-```
-source setup_bert_env.sh
-```
-
 ## Datasets
 
 ### Criteo Terabyte Dataset
@@ -33,30 +21,29 @@ Copy the download URL into the command below as the `<download url>` and
 replace the `<dir/to/save/dlrm_data>` to any path where you want to download
 and save the dataset.
 ```bash
-export DATASET_DIR=<dir/to/save/dlrm_data>
+export DATASET_DIR=/dlrm_data
 
 mkdir ${DATASET_DIR} && cd ${DATASET_DIR}
 curl -O <download url>/day_{$(seq -s , 0 23)}.gz
 gunzip day_*.gz
 ```
+If the `day_*.gz` is empty, please download them from website, i.e. using chrome to download.
 The raw data will be automatically preprocessed and saved as `day_*.npz` to
 the `DATASET_DIR` when DLRM is run for the first time. On subsequent runs, the
 scripts will automatically use the preprocessed data.
 
-## Quick Start Scripts
+### Model Specific Setup
 
-```bash
+Make sure you have set up the general dependecies via `source setup_env.sh`
+You should now at:
+1. conda env: ipex
+2. locate at /home/ModelBench
 
-# Env vars
-export PRECISION=<specify the precision to run>
-export DATASET_DIR=<path to the dataset>
-export OUTPUT_DIR=<directory where log files will be written>
+Then you can run
 ```
-
-| Script name | Description |
-|-------------|-------------|
-| `inference_performance.sh` | Run inference to verify performance for the specified precision (fp32, bf32, bf16, or int8). |
-| `accuracy.sh` | Measures the inference accuracy for the specified precision (fp32, bf32, bf16, or int8). |
+source bench_dlrm.sh
+```
+ The bench results are saved in `ModelBench/models/quickstart/language_modeling/pytorch/bert_large/inference/cpu`, named as `int8_bs32_onednn_graph_compiler.log`, or `fp32_bs32_onednn_primitives.log`, etc.
 
 ## More Details
 Please refer to [link](https://github.com/IntelAI/models/blob/pytorch-r1.13-models/quickstart/recommendation/pytorch/dlrm/inference/cpu/README.md).

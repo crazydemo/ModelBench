@@ -15,9 +15,9 @@ Please refer to [Simplified Bert Large Inference](https://github.com/crazydemo/M
 
 ## Bench DLRM
 Please refer to [Simplified DLRM Inference](https://github.com/crazydemo/ModelBench/blob/main/simplified_dlrm_inference.md). The detailed guidance is in [Detailed DLRM Inference](https://github.com/IntelAI/models/blob/pytorch-r1.13-models/quickstart/recommendation/pytorch/dlrm/inference/cpu/README.md)
-## Manual Config
+## Manual Config (has been integrated in bench_bert.sh / bench_dlrm.sh)
 By default, only int8 mode of IPEX will run into oneDNN Graph. If you want to benchmark the performance under fp32 mode with oneDNN Graph and Anonymous Compiler, you need to manually do some modification on IPEX and Model Zoo source code.
-For IPEX, `navigate to [IPEX_ROOT]/csrc/cpu/jit/codegen/onednn/interface.cpp and change the value of llga_fp32_bf16_enabled from false to true`:
+For IPEX, `navigate to [IPEX_ROOT]/csrc/jit/codegen/onednn/interface.cpp and change the value of llga_fp32_bf16_enabled from false to true`:
 ```
 bool llga_fp32_bf16_enabled = true;
 ```
@@ -42,7 +42,7 @@ OMP_NUM_THREADS=1 => OMP_NUM_THREADS=32
 ## Switch Anonymous Compiler and oneDNN
 By default, anonymous compiler is enabled on IPEX. To get oneDNN's performance data on end-to-end model, you need to set the below environment variable:
 ```
-export _DNNL_DISABLE_COMPILER_BACKEND=1
+export _ONEDNN_GRAPH_DISABLE_COMPILER_BACKEND=1
 ```
 ## Evaluation and expected result
 To check whether the Anonymous Compiler is enabled or not, you can check the graph verbose (via export ONEDNN GRAPH VERBOSE=1). You will see the below outputs from verbose once compiler backend is enabled.
